@@ -7,7 +7,7 @@ from scapy.all import *
 
 dstaddr=sys.argv[1]
 pid=os.getpid()
-payload="a" * 1452
+payload="a" * 1472
 a=srp1(Ether(src=SRC_MAC, dst=PF_MAC)/IP(flags="DF", src=SRC_OUT, dst=dstaddr)/
     ICMP(id=pid)/payload, iface=SRC_IF, timeout=2)
 if a and a.payload.payload.type==3 and a.payload.payload.code==4:
