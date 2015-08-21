@@ -10,7 +10,9 @@ pid=os.getpid()
 hdr=IP(flags="DF", src=SRC_OUT, dst=dstaddr)/ICMP(id=pid)
 payload="a" * (1500 - len(str(hdr)))
 ip=hdr/payload
-a=srp1(Ether(src=SRC_MAC, dst=PF_MAC)/ip, iface=SRC_IF, timeout=2)
+eth=Ether(src=SRC_MAC, dst=PF_MAC)/ip
+a=srp1(eth, iface=SRC_IF, timeout=2)
+
 if a and a.payload.payload.type==3 and a.payload.payload.code==4:
 	mtu=a.payload.payload.unused
 	print "mtu=%d" % (mtu)
