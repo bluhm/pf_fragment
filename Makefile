@@ -162,11 +162,7 @@ run-regress-fragping6: stamp-pfctl
 # parse response packet to determine MTU of the router.  The MTU has
 # to be 1300 octets.  The MTU has to be defined at out interface of
 # the router RT before.
-TARGETS +=	ping-mtu
-
-# Currently this test fails as pf does not fix the checksum of
-# NATed packets inside of ICMP packets.
-# XXX TARGETS +=	ping6-mtu
+TARGETS +=	ping-mtu ping6-mtu
 
 run-regress-ping-mtu: addr.py stamp-pfctl
 	@echo '\n======== $@ ========'
