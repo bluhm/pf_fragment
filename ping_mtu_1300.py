@@ -8,7 +8,7 @@ from scapy.all import *
 dstaddr=sys.argv[1]
 pid=os.getpid()
 hdr=IP(flags="DF", src=SRC_OUT, dst=dstaddr)/ICMP(id=pid)
-payload="a" * (1500 - len(str(hdr)))
+payload="a" * (1400 - len(str(hdr)))
 ip=hdr/payload
 eth=Ether(src=SRC_MAC, dst=PF_MAC)/ip
 a=srp1(eth, iface=SRC_IF, timeout=2)
