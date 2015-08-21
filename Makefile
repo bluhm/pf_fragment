@@ -146,7 +146,6 @@ run-regress-fragping: stamp-pfctl
 	@echo '\n======== $@ ========'
 .for ip in PF_IN PF_OUT RT_IN RT_OUT ECO_IN RDR_IN RTT_IN
 	@echo Check ping ${ip}:
-	-ping -n -c 1 -s 1400 -D ${${ip}}
 	ping -n -c 1 -s 5000 ${${ip}}
 .endfor
 
@@ -154,7 +153,7 @@ run-regress-fragping6: stamp-pfctl
 	@echo '\n======== $@ ========'
 .for ip in PF_IN PF_OUT RT_IN RT_OUT ECO_IN RDR_IN RTT_IN
 	@echo Check ping ${ip}6:
-	-ping6 -n -c 1 -s 1400 -m ${${ip}6}
+	-ping6 -n -c 1 -s 1352 -m ${${ip}6}
 	ping6 -n -c 1 -s 5000 -m ${${ip}6}
 .endfor
 
