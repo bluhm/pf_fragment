@@ -41,7 +41,8 @@ regress:
 
 SRC_IF ?=	tun0
 SRC_MAC ?=	fe:e1:ba:d1:0a:dc
-PF_IF ?=	vio0
+PF_IFIN ?=	vio0
+PF_IFOUT ?=	vio1
 PF_MAC ?=	52:54:00:12:34:50
 PF_SSH ?=
 RT_SSH ?=
@@ -92,7 +93,8 @@ addr.py: Makefile
 	rm -f $@ $@.tmp
 	echo 'SRC_IF="${SRC_IF}"' >>$@.tmp
 	echo 'SRC_MAC="${SRC_MAC}"' >>$@.tmp
-	echo 'PF_IF="${PF_IF}"' >>$@.tmp
+	echo 'PF_IFIN="${PF_IFIN}"' >>$@.tmp
+	echo 'PF_IFOUT="${PF_IFOUT}"' >>$@.tmp
 	echo 'PF_MAC="${PF_MAC}"' >>$@.tmp
 .for var in SRC_OUT PF_IN PF_OUT RT_IN RT_OUT ECO_IN RDR_IN RTT_IN
 	echo '${var}="${${var}}"' >>$@.tmp
@@ -105,7 +107,7 @@ addr.py: Makefile
 stamp-pfctl: addr.py pf.conf
 	cat addr.py ${.CURDIR}/pf.conf | pfctl -n -f -
 	cat addr.py ${.CURDIR}/pf.conf | \
-	    sed 's/@$$PF_IF /@${PF_IF} /g' | \
+	    sed 's/@$$PF_IFIN /@${PF_IFIN} /;s/@$$PF_IFOUT /@${PF_IFOUT} /' | \
 	    ssh ${PF_SSH} ${SUDO} pfctl -a regress -f -
 	@date >$@
 
