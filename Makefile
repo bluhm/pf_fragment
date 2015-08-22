@@ -153,9 +153,16 @@ run-regress-fragping: stamp-pfctl
 
 run-regress-fragping6: stamp-pfctl
 	@echo '\n======== $@ ========'
-.for ip in PF_IN PF_OUT RT_IN RT_OUT ECO_IN RDR_IN RTT_IN
+.for ip in PF_IN PF_OUT RT_IN RT_OUT
 	@echo Check ping ${ip}6:
-	-ping6 -n -c 1 -s 1352 -m ${${ip}6}
+	${SUDO} route -n delete -host -inet6 ${${ip}6} || true
+	ping6 -n -c 1 -s 1452 -m ${${ip}6} & sleep 1; kill $$! || true
+	ping6 -n -c 1 -s 5000 -m ${${ip}6}
+.endfor
+.for ip in ECO_IN RDR_IN RTT_IN
+	@echo Check ping ${ip}6:
+	${SUDO} route -n delete -host -inet6 ${${ip}6} || true
+	ping6 -n -c 1 -s 1352 -m ${${ip}6} & sleep 1; kill $$! || true
 	ping6 -n -c 1 -s 5000 -m ${${ip}6}
 .endfor
 
