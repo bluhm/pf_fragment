@@ -39,7 +39,7 @@ regress:
 #
 # Run make check-setup to see if you got the setup correct.
 
-SRC_IF ?=	tun0
+SRC_IF ?=	tap0
 SRC_MAC ?=	fe:e1:ba:d1:0a:dc
 PF_IFIN ?=	vio0
 PF_IFOUT ?=	vio1
